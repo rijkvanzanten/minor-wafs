@@ -29,5 +29,5 @@ It's extremely difficult to succesfully refactor jQuery out of code.
 
 <hr />
 
-1: [jQuery: the good, the bad & the ugly](http://www.webdesignerdepot.com/2012/09/jquery-the-good-the-bad-and-the-ugly/)
-2: [jQuery considered harmful](http://lea.verou.me/2015/04/jquery-considered-harmful/)
+1. [jQuery: the good, the bad & the ugly](http://www.webdesignerdepot.com/2012/09/jquery-the-good-the-bad-and-the-ugly/)
+2. [jQuery considered harmful](http://lea.verou.me/2015/04/jquery-considered-harmful/)
