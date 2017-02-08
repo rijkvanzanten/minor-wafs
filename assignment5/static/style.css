@@ -1,0 +1,69 @@
+/* General Styles
+------------------------------------------------------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Comic Sans MS', cursive;
+    min-height: 100vh;
+    position: relative;
+    background-color: aqua;
+}
+
+/* Navigation bar
+------------------------------------------------------------------------------*/
+nav {
+    position: fixed;
+    background-color: papayawhip;
+    width: 100%;
+    bottom: 0;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+nav ul li {
+    flex-grow: 1;
+    flex-basis: 10em;
+    margin: 1em;
+    text-align: center;
+}
+
+nav ul li span {
+    display: block;
+    font-size: 2em;
+}
+
+nav ul li a {
+    text-decoration: none;
+}
+
+/* Pages
+------------------------------------------------------------------------------*/
+#home {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#home h1 {
+    font-size: 4em;
+    animation: rotate 5s infinite linear;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
