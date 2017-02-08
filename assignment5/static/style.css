@@ -10,6 +10,7 @@ body {
     min-height: 100vh;
     position: relative;
     background-color: aqua;
+    padding-bottom: 10em;
 }
 
 /* Navigation bar
@@ -19,18 +20,21 @@ nav {
     background-color: papayawhip;
     width: 100%;
     bottom: 0;
+    height: 10em;
 }
 
 nav ul {
     display: flex;
     justify-content: center;
     list-style: none;
+    height: 100%;
+    align-items: center;
+    align-content: flex-start;
 }
 
 nav ul li {
     flex-grow: 1;
     flex-basis: 10em;
-    margin: 1em;
     text-align: center;
 }
 
@@ -45,16 +49,16 @@ nav ul li a {
 
 /* Pages
 ------------------------------------------------------------------------------*/
-#home {
-    height: 50vh;
+section {
+    min-height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-#home h1 {
-    font-size: 4em;
+#home > span {
+    font-size: 10em;
     animation: rotate 5s infinite linear;
 }
 
@@ -66,4 +70,47 @@ nav ul li a {
     to {
         transform: rotate(360deg);
     }
+}
+
+#best-practices {
+    text-align: center;
+}
+
+#best-practices ul {
+    background-color: white;
+    border-radius: .5em;
+    list-style-position: inside;
+    margin-top: 2em;
+    padding: 1em;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22), 0 19px 38px hotpink, 0 15px 12px yellow;
+    position: relative;
+}
+
+#best-practices ul:after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 50px;
+  width: 0;
+  border-width: 15px 15px 0;
+  border-style: solid;
+  border-color: white transparent;
+}
+
+#best-practices img {
+    animation: wobble 500ms infinite alternate linear;
+}
+
+@keyframes wobble {
+    from {
+        transform: rotate(14deg) rotateY(180deg);
+    }
+
+    to {
+        transform: rotate(2deg) rotateY(180deg);
+    }
+}
+
+.hidden {
+    display: none !important;
 }
