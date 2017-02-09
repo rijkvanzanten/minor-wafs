@@ -1,7 +1,7 @@
 /* global window document */
 
 window.onload = function() {
-  window.location.hash = '#home';
+  if(!window.location.hash.length) window.location.hash = '#home';
 };
 
 // 'use strict';
