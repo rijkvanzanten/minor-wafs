@@ -113,3 +113,13 @@ section {
 .hidden {
     display: none;
 }
+
+/* "Navigation"
+------------------------------------------------------------------------------*/
+#home, #best-practices {
+    display: none;
+}
+
+#home:target, #best-practices:target {
+    display: flex;
+}
