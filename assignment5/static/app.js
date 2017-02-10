@@ -1,8 +1,9 @@
 /* global window document */
 
-window.onload = function() {
+
+window.addEventListener('load', () => {
   if(!window.location.hash.length) window.location.hash = '#home';
-};
+});
 
 // 'use strict';
 //
