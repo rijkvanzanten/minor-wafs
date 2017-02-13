@@ -1,8 +1,29 @@
 /* global document */
 
-export function setBackgroundImage(imgObj) {
-  const imageElement = document.querySelector('body > img');
-  imageElement.srcset = `${imgObj.url} 960w, ${imgObj.hdurl} 1200w`;
-  imageElement.addEventListener('load', () =>
-    imageElement.setAttribute('data-loading', false));
+export function component(tag, attributes = {}) {
+  // Create elementNode
+  const element = document.createElement(tag);
+
+  // Add attributes to element
+  Object.keys(attributes).forEach(key => {
+    element.setAttribute(key, attributes[key]);
+  });
+
+  // Return original element
+  return (...children) => {
+    children.forEach(child => {
+      // If given child is a string, append as textNode. Else, append child element
+      if (typeof child === 'string') {
+        element.append(document.createTextNode(child));
+      } else {
+        element.append(child);
+      }
+    });
+
+    return element;
+  };
+}
+
+export function render(rootEl, el) {
+  rootEl.append(el);
 }
