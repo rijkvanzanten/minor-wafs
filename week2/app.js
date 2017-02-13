@@ -4,13 +4,15 @@ import { component, render } from './templater.js';
 const now = new Date();
 
 // Get and set background-image
-fetch(
-  'https://api.nasa.gov/planetary/apod?api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6'
-)
+fetch('https://api.nasa.gov/planetary/apod?api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6')
   .then(res => res.json())
   .then(res => {
     const imageElement = document.querySelector('body > img');
+
+    // add image urls to sourceset
     imageElement.srcset = `${res.url} 960w, ${res.hdurl} 1200w`;
+
+    // Add event listener which changes data attribute on image load
     imageElement.addEventListener('load', () =>
       imageElement.setAttribute('data-loading', false));
   })
