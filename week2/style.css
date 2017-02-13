@@ -64,7 +64,7 @@ body > h1, body > p {
 .asteroid-list article {
     border-bottom: 1px solid white;
     margin: 1em;
-    transition: background-color 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: all 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .asteroid-list article[data-hazardous=false] {
@@ -73,6 +73,7 @@ body > h1, body > p {
 
 .asteroid-list article:hover {
     background-color: rgba(255, 255, 255, 0.5);
+    color: white;
 }
 
 .asteroid-list a {
