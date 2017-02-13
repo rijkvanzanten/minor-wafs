@@ -26,16 +26,22 @@ fetch(
   .then(res => res.json())
   .then(res => {
     render(
-      document.body,
-      component('ol', { class: 'asteroid-list' })(
-        ...Object.keys(res.near_earth_objects).map(date =>
+      document.querySelector('.asteroid-list'),
+      ...Object.keys(res.near_earth_objects)
+        .sort((a, b) => new Date(a) - new Date(b))
+        .map(key =>
           component('li')(
-            component('time', { datetime: date })(date),
-            ...res.near_earth_objects[date].map(asteroid =>
-              component('article')(asteroid.name)
+            component('time', { datetime: key })(new Date(key)),
+            ...res.near_earth_objects[key]
+              .map(asteroid =>
+                component('article')(
+                  component('a', { href: '/asteroid/' + asteroid.neo_reference_id })(
+                    component('h2')(asteroid.name),
+                    component('p')(asteroid.neo_reference_id)
+                  )
+                )
             )
           )
-        )
       )
     );
   });
