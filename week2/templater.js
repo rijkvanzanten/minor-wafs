@@ -9,7 +9,7 @@ export function component(tag, attributes = {}) {
     element.setAttribute(key, attributes[key]);
   });
 
-  // Return original element
+  // Return function which accepts child elements array
   return (...children) => {
     children.forEach(child => {
       // If given child is a string, append as textNode. Else, append child element
