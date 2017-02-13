@@ -24,6 +24,6 @@ export function component(tag, attributes = {}) {
   };
 }
 
-export function render(rootEl, el) {
-  rootEl.append(el);
+export function render(rootEl, ...el) {
+  el.forEach(element => rootEl.append(element));
 }
