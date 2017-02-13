@@ -1,0 +1,38 @@
+html {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell,
+"Helvetica Neue", sans-serif;
+}
+
+body {
+    min-height: 100%;
+    background-color: black;
+    background-size: cover;
+}
+
+body > img:first-of-type {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    transition: all 2s ease;
+    transform: scale(.98);
+}
+
+body > img:first-of-type[data-loading=false] {
+    opacity: .3;
+    transform: scale(1);
+}
+
+/* Dit verandert nog: */
+h1 {
+    position: relative;
+    font-size: 20px;
+    top: 5em;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+}
