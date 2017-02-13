@@ -34,7 +34,7 @@ fetch(
             component('time', { datetime: key })(new Date(key)),
             ...res.near_earth_objects[key]
               .map(asteroid =>
-                component('article')(
+                component('article', { 'data-hazardous': asteroid.is_potentially_hazardous_asteroid })(
                   component('a', { href: '/asteroid/' + asteroid.neo_reference_id })(
                     component('h2')(asteroid.name),
                     component('p')(asteroid.neo_reference_id)
