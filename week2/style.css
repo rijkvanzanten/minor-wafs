@@ -1,6 +1,5 @@
 html {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell,
-"Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 body {
@@ -15,10 +14,10 @@ body > img:first-of-type {
     top: 0;
     left: 0;
     object-fit: cover;
-    position: absolute;
+    position: fixed;
     z-index: -1;
     opacity: 0;
-    transition: all 2s ease;
+    transition: all 2s cubic-bezier(0.0, 0.0, 0.2, 1);
     transform: scale(.98);
 }
 
@@ -27,12 +26,6 @@ body > img:first-of-type[data-loading=false] {
     transform: scale(1);
 }
 
-/* Dit verandert nog: */
-h1 {
-    position: relative;
-    font-size: 20px;
-    top: 5em;
-    color: rgba(255, 255, 255, 0.8);
-    text-align: center;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+.asteroid-list {
+    color: white;
 }
