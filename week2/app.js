@@ -32,8 +32,10 @@ fetch(
           component('li')(
             component('time', { datetime: date })(date),
             ...res.near_earth_objects[date].map(asteroid =>
-              component('article')(asteroid.name))
-          ))
+              component('article')(asteroid.name)
+            )
+          )
+        )
       )
     );
   });
