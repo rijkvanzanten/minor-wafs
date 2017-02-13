@@ -27,11 +27,12 @@ fetch(
   .then(res => {
     render(
       document.body,
-      component('section', { class: 'asteroid-list' })(
+      component('ol', { class: 'asteroid-list' })(
         ...Object.keys(res.near_earth_objects).map(date =>
-          component('ol')(
+          component('li')(
+            component('time', { datetime: date })(date),
             ...res.near_earth_objects[date].map(asteroid =>
-              component('li')(asteroid.name))
+              component('article')(asteroid.name))
           ))
       )
     );
