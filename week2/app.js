@@ -5,7 +5,7 @@ const now = new Date();
 
 // Get and set background-image
 fetch(
-  'https://api.nasa.gov/planetary/apod?api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6',
+  'https://api.nasa.gov/planetary/apod?api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6'
 )
   .then(res => res.json())
   .then(res => {
@@ -18,10 +18,10 @@ fetch(
 
 fetch(
   `https://api.nasa.gov/neo/rest/v1/feed?start_date=${now.getFullYear()}-${addLeadingZero(
-    now.getMonth() + 1,
+    now.getMonth() + 1
   )}-${addLeadingZero(
-    now.getDate(),
-  )}&api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6`,
+    now.getDate()
+  )}&api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6`
 )
   .then(res => res.json())
   .then(res => {
@@ -31,9 +31,9 @@ fetch(
         ...Object.keys(res.near_earth_objects).map(date =>
           component('ol')(
             ...res.near_earth_objects[date].map(asteroid =>
-              component('li')(asteroid.name)),
-          )),
-      ),
+              component('li')(asteroid.name))
+          ))
+      )
     );
   });
 
