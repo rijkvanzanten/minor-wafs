@@ -23,6 +23,7 @@ import router from './router.js';
         .add(/asteroid\/(.*)/, id => {
           render.toggleOverlay();
         })
+        // .add(/home/, () => render.toggleOverlay())
         .listen();
     },
 
@@ -31,7 +32,9 @@ import router from './router.js';
      */
     getImageOfTheDay() {
       // Get background image from NASA image of the day
-      fetch('https://api.nasa.gov/planetary/apod?api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6')
+      fetch(
+        'https://api.nasa.gov/planetary/apod?api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6'
+      )
         .then(res => res.json())
         // Render image to DOM
         .then(res => render.backgroundImage(res))
@@ -44,34 +47,49 @@ import router from './router.js';
      * Fetch the nearest asteroids based on current date
      */
     getAsteroids() {
-      fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${utils.formatDate(new Date())}&api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6`)
+      fetch(
+        `https://api.nasa.gov/neo/rest/v1/feed?start_date=${utils.formatDate(
+          new Date()
+        )}&api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6`
+      )
         .then(res => res.json())
         .then(res => res.near_earth_objects)
         .then(res => {
           this.store.asteroids = res;
-          this.store.flattenedAsteroids = [].concat(...Object.keys(res)
-            .map(key => res[key]));
+          this.store.flattenedAsteroids = [].concat(
+            ...Object.keys(res).map(key => res[key])
+          );
 
-          this.store.minSize = Math.min(...this.store.flattenedAsteroids.map(asteroid => asteroid.estimated_diameter.meters.estimated_diameter_max - asteroid.estimated_diameter.meters.estimated_diameter_min));
-          this.store.maxSize = Math.max(...this.store.flattenedAsteroids.map(asteroid => asteroid.estimated_diameter.meters.estimated_diameter_max - asteroid.estimated_diameter.meters.estimated_diameter_min));
+          this.store.minSize = Math.min(
+            ...this.store.flattenedAsteroids.map(
+              asteroid =>
+                asteroid.estimated_diameter.meters.estimated_diameter_max -
+                  asteroid.estimated_diameter.meters.estimated_diameter_min
+            )
+          );
+          this.store.maxSize = Math.max(
+            ...this.store.flattenedAsteroids.map(
+              asteroid =>
+                asteroid.estimated_diameter.meters.estimated_diameter_max -
+                  asteroid.estimated_diameter.meters.estimated_diameter_min
+            )
+          );
           return res;
         })
-        .then(res =>
-          render.toDom(
-            document.querySelector('.asteroid-list'),
-            Object.keys(res)
-              .sort((a, b) => new Date(a) - new Date(b))
-              .map(key => {
-                return render.listSection(
-                  key,
-                  res[key]
-                    .map(asteroid => render.listItem(asteroid))
-                    .reduce((html, listItem) => html += listItem)
-                );
-              })
-              .reduce((html, listSectionElement) => html += listSectionElement)
-          )
-        )
+        .then(res => render.toDom(
+          document.querySelector('.asteroid-list'),
+          Object.keys(res)
+            .sort((a, b) => new Date(a) - new Date(b))
+            .map(key => {
+              return render.listSection(
+                key,
+                res[key]
+                  .map(asteroid => render.listItem(asteroid))
+                  .reduce((html, listItem) => html += listItem)
+              );
+            })
+            .reduce((html, listSectionElement) => html += listSectionElement)
+        ))
         .catch(err => console.error(err));
     }
   };
@@ -113,9 +131,18 @@ import router from './router.js';
      * @returns {String} Html element
      */
     listItem(asteroid) {
-      const size = Math.floor(asteroid.estimated_diameter.meters.estimated_diameter_max - asteroid.estimated_diameter.meters.estimated_diameter_min);
+      const size = Math.floor(
+        asteroid.estimated_diameter.meters.estimated_diameter_max -
+          asteroid.estimated_diameter.meters.estimated_diameter_min
+      );
 
-      const pixelSize = utils.rangeScale(app.store.minSize, app.store.maxSize, 10, 60, size);
+      const pixelSize = utils.rangeScale(
+        app.store.minSize,
+        app.store.maxSize,
+        10,
+        60,
+        size
+      );
 
       return `
         <article data-hazardous="${asteroid.is_potentially_hazardous_asteroid}">
@@ -130,6 +157,10 @@ import router from './router.js';
       `;
     },
 
+    /**
+     * Create asteroid svg based on given size
+     * @param {Number} size SVG size in PX
+     */
     asteroidSvg(size) {
       const rotation = Math.floor(Math.random() * 360);
 
@@ -142,8 +173,11 @@ import router from './router.js';
       return asteroids[Math.floor(Math.random() * asteroids.length)];
     },
 
+    /**
+     * Disable or enable asteroid overlay
+     */
     toggleOverlay() {
-      const overlayElement = document.querySelector('.single-asteroid');
+      const overlayElement = document.querySelector('.single-asteroid-overlay');
       overlayElement.hidden = !overlayElement.hidden;
     },
 
@@ -154,12 +188,12 @@ import router from './router.js';
      * @returns {Boolean} Success
      */
     toDom(rootElement, element) {
-      if(typeof element === 'string') {
+      if (typeof element === 'string') {
         rootElement.innerHTML += element;
         return true;
       }
 
-      if(typeof element === 'object') {
+      if (typeof element === 'object') {
         rootElement.append(element);
         return true;
       }
@@ -169,5 +203,4 @@ import router from './router.js';
   };
 
   app.init();
-
 })();

@@ -1,5 +1,6 @@
 html {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    color: white;
 }
 
 body {
@@ -96,7 +97,7 @@ body > h1, body > p {
     text-align: left;
 }
 
-.single-asteroid {
+.single-asteroid-overlay {
     position: fixed;
     left: 0;
     top: 0;
@@ -105,6 +106,14 @@ body > h1, body > p {
     z-index: 15;
     animation: blurIn 250ms forwards;
     animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.single-asteroid-overlay[hidden] {
+    display: none;
 }
 
 @keyframes blurIn {
@@ -122,9 +131,28 @@ body > h1, body > p {
     }
 }
 
+.single-asteroid {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.single-asteroid dl {
+    display: flex;
+    justify-content: center;
+}
+
+.single-asteroid dt {
+    margin: 0 1em;
+}
+
+.single-asteroid dd {
+    margin: 0;
+}
+
 .single-asteroid svg {
     width: 5em;
-    animation: space 30s infinite;
+    animation: space 15s infinite;
     animation-timing-function: ease-in-out;
 }
 
