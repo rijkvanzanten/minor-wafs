@@ -59,6 +59,7 @@ body > h1, body > p {
     background-color: white;
     color: black;
     padding: 1em;
+    z-index: 5;
 }
 
 .asteroid-list article {
@@ -101,7 +102,7 @@ body > h1, body > p {
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 5;
+    z-index: 15;
     animation: blurIn 250ms forwards;
     animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
 }
