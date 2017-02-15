@@ -21,14 +21,14 @@ import router from './router.js';
 
       router
         .add(/asteroid\/(.*)/, id => {
-          render.toggleOverlay();
+          render.openOverlay(id);
         })
         .listen();
 
       // TODO: Find better place for this bad-boy
       document
         .querySelector('.single-asteroid-overlay')
-        .addEventListener('click', render.toggleOverlay);
+        .addEventListener('click', render.closeOverlay);
     },
 
     /**
@@ -178,19 +178,62 @@ import router from './router.js';
     },
 
     /**
-     * Disable or enable asteroid overlay
+     * Open asteroid overlay
+     * @param {Number} id Id of asteroid to show
      */
-    toggleOverlay() {
+    openOverlay(id) {
+      const overlayParent = document.querySelector('.single-asteroid-overlay');
+      const content = document.querySelector('.single-asteroid');
+
+      const asteroid = app.store.flattenedAsteroids.filter(
+        asteroid => asteroid.neo_reference_id === id
+      )[0];
+      const approachData = asteroid.close_approach_data[0];
+      content.innerHTML = `
+        ${this.asteroidSvg(
+        utils.rangeScale(
+          app.store.minSize,
+          app.store.maxSize,
+          32,
+          128,
+          asteroid.estimated_diameter.meters.estimated_diameter_max -
+            asteroid.estimated_diameter.meters.estimated_diameter_min
+        )
+      )}
+        <h2>${asteroid.name}</h2>
+        <dl>
+            <dt>Speed</dt>
+            <dd>${Math.floor(
+        approachData.relative_velocity.kilometers_per_hour
+      )}km/h</dd>
+            <dt>Altitude</dt>
+            <dd>${Math.floor(approachData.miss_distance.kilometers)}km</dd>
+            <dt>Date</dt>
+            <dd>${approachData.close_approach_date}</dd>
+            <dt>Est. size</dt>
+            <dd>${Math.floor(
+              asteroid.estimated_diameter.meters.estimated_diameter_max -
+                  asteroid.estimated_diameter.meters.estimated_diameter_min
+              )}m
+            </dd>
+        </dl>
+      `;
+      overlayParent.hidden = false;
+    },
+
+    closeOverlay() {
       const overlayElement = document.querySelector('.single-asteroid-overlay');
-      if (overlayElement.hidden) {
-        overlayElement.hidden = false;
-      } else {
-        overlayElement.classList.add('animate-out');
-        setTimeout(() => {
+
+      overlayElement.classList.add('animate-out');
+      setTimeout(
+        () => {
           overlayElement.classList.remove('animate-out');
           overlayElement.hidden = true;
-        }, 500);
-      }
+        },
+        500
+      );
+
+      window.location.hash = '#';
     },
 
     /**
