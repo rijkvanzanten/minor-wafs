@@ -104,12 +104,17 @@ body > h1, body > p {
     right: 0;
     bottom: 0;
     z-index: 15;
-    animation: blurIn 250ms forwards;
+    animation: blurIn 500ms forwards;
     animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: opacity 245ms cubic-bezier(0.4, 0.0, 1, 1);
+}
+
+.single-asteroid-overlay.animate-out {
+    opacity: 0;
 }
 
 .single-asteroid-overlay[hidden] {
@@ -117,17 +122,22 @@ body > h1, body > p {
 }
 
 @keyframes blurIn {
-    from {
-        background-color: rgba(0, 0, 0, 0.8);
+    0% {
+        background-color: rgba(0, 0, 0, 0);
         -webkit-backdrop-filter: blur(0);
         backdrop-filter: blur(0);
-        background-color: rgba(0, 0, 0, 0);
     }
 
-    to {
-        -webkit-backdrop-filter: blur(2px);
-        backdrop-filter: blur(2px);
-        background-color: rgba(0, 0, 0, 0.8);
+    50% {
+        -webkit-backdrop-filter: blur(1px);
+        backdrop-filter: blur(1px);
+        background-color: rgba(0, 0, 0, .8);
+    }
+
+    100% {
+        background-color: rgba(0, 0, 0, .8);
+        -webkit-backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px);
     }
 }
 

@@ -23,8 +23,12 @@ import router from './router.js';
         .add(/asteroid\/(.*)/, id => {
           render.toggleOverlay();
         })
-        // .add(/home/, () => render.toggleOverlay())
         .listen();
+
+      // TODO: Find better place for this bad-boy
+      document
+        .querySelector('.single-asteroid-overlay')
+        .addEventListener('click', render.toggleOverlay);
     },
 
     /**
@@ -178,7 +182,15 @@ import router from './router.js';
      */
     toggleOverlay() {
       const overlayElement = document.querySelector('.single-asteroid-overlay');
-      overlayElement.hidden = !overlayElement.hidden;
+      if (overlayElement.hidden) {
+        overlayElement.hidden = false;
+      } else {
+        overlayElement.classList.add('animate-out');
+        setTimeout(() => {
+          overlayElement.classList.remove('animate-out');
+          overlayElement.hidden = true;
+        }, 500);
+      }
     },
 
     /**
