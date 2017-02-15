@@ -154,7 +154,7 @@ import router from './router.js';
             ${this.asteroidSvg(pixelSize)}
             <div>
               <h2>${asteroid.name}</h2>
-              <p>${asteroid.neo_reference_id}</p>
+              ${asteroid.is_potentially_hazardous_asteroid ? 'Potentially hazardous' : ''}
             </div>
           </a>
         </article>
