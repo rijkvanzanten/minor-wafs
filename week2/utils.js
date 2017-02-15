@@ -19,6 +19,19 @@ export default {
     return ('0' + number).slice(-2);
   },
 
+  /**
+   * Convert number from one scale to another
+   * based on this mathematical function:
+   *        (b - a)(x - min)
+   * f(x) = ---------------- + a
+   *          (max - min)
+   *
+   * @param {Number} min Original scale minimum
+   * @param {Number} max Original scale maximum
+   * @param {Number} a Target scale minimum
+   * @param {Number} b Target scale maximum
+   * @param {Number} x Original number to convert
+   */
   rangeScale(min, max, a, b, x) {
     return ((b - a) * (x - min)) / (max - min) + a;
   }
