@@ -34,10 +34,6 @@ body > img:first-of-type[data-loading=false] {
     transform: scale(1);
 }
 
-body > h1, body > p {
-    color: white;
-}
-
 body > p {
     font-style: italic;
     max-width: 35em;
@@ -48,7 +44,6 @@ h2 {
 }
 
 .asteroid-list {
-    color: white;
     width: 35rem;
     height: 70vh;
     margin: 2em auto;
@@ -96,7 +91,6 @@ h2 {
     padding: 2em 1em;
     box-sizing: border-box;
     align-items: center;
-
 }
 
 .asteroid-list svg {
