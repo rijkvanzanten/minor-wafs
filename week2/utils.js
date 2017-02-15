@@ -17,5 +17,9 @@ export default {
    */
   addLeadingZero(number) {
     return ('0' + number).slice(-2);
+  },
+
+  rangeScale(min, max, a, b, x) {
+    return ((b - a) * (x - min)) / (max - min) + a;
   }
 };
