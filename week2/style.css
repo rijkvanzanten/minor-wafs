@@ -84,3 +84,29 @@ body > h1, body > p {
     display: block;
     padding: 1em;
 }
+
+.single-asteroid {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    animation: blurIn 250ms forwards;
+    animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+@keyframes blurIn {
+    from {
+        background-color: rgba(0, 0, 0, 0.8);
+        -webkit-backdrop-filter: blur(0);
+        backdrop-filter: blur(0);
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    to {
+        -webkit-backdrop-filter: blur(2px);
+        backdrop-filter: blur(2px);
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+}
