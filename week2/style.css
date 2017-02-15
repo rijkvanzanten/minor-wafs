@@ -44,7 +44,8 @@ h2 {
 }
 
 .asteroid-list {
-    width: 35rem;
+    width: 100%;
+    max-width: 35rem;
     height: 70vh;
     margin: 2em auto;
     position: relative;
