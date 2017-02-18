@@ -4,6 +4,15 @@ import utils from './utils.js';
 import router from './router.js';
 
 (function() {
+  const config = {
+    apiKey: 'lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6',
+    baseUrl: 'https://api.nasa.gov/',
+    endpoints: {
+      apod: 'planetary/apod',
+      neo: 'neo/rest/v1/feed'
+    }
+  };
+
   const app = {
     store: {
       asteroids: {},
@@ -35,10 +44,10 @@ import router from './router.js';
      * Fetch NASA's APOD and render to DOM
      */
     getImageOfTheDay() {
+      const { baseUrl, apiKey, endpoints: { apod }} = config;
+
       // Get background image from NASA image of the day
-      fetch(
-        'https://api.nasa.gov/planetary/apod?api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6'
-      )
+      fetch(`${baseUrl}${apod}?api_key=${apiKey}`)
         .then(res => res.json())
         // Render image to DOM
         .then(res => render.backgroundImage(res))
@@ -51,11 +60,10 @@ import router from './router.js';
      * Fetch the nearest asteroids based on current date
      */
     getAsteroids() {
-      fetch(
-        `https://api.nasa.gov/neo/rest/v1/feed?start_date=${utils.formatDate(
-          new Date()
-        )}&api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6`
-      )
+      const { baseUrl, apiKey, endpoints: { neo }} = config;
+      const today = utils.formatDate(new Date());
+
+      fetch(`${baseUrl}${neo}?start_date=${today}&api_key=${apiKey}`)
         .then(res => res.json())
         .then(res => res.near_earth_objects)
         .then(res => {
