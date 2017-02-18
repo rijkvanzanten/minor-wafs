@@ -1,4 +1,4 @@
-/* global window, history, location */
+/* global window, location */
 
 /**
  * Loosely based on Krasimir Tsonevs 100-line router
@@ -42,11 +42,14 @@ const Router = {
    * @param {Function} handler Callback function when route is called
    */
   add(regex, handler) {
-    if(typeof regex == 'function') {
+    if (typeof regex == 'function') {
       handler = regex;
       regex = '';
     }
-    this.routes.push({ regex, handler });
+    this.routes.push({
+      regex,
+      handler
+    });
     return this;
   },
 
@@ -58,7 +61,7 @@ const Router = {
     const fragment = f || this.getFragment();
     this.routes.forEach(route => {
       const match = fragment.match(route.regex);
-      if(match) {
+      if (match) {
         match.shift();
         route.handler.apply({}, match);
         return this;
