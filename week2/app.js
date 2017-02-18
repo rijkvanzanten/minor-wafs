@@ -30,7 +30,7 @@ import router from './router.js';
 
       router
         .add(/asteroid\/(.*)/, id => {
-          render.openOverlay(id);
+          render.overlay(id);
         })
         .listen();
 
@@ -189,8 +189,8 @@ import router from './router.js';
      * Open asteroid overlay
      * @param {Number} id Id of asteroid to show
      */
-    openOverlay(id) {
-      const overlayParent = document.querySelector('.single-asteroid-overlay');
+    overlay(id) {
+      const parent = document.querySelector('.single-asteroid-overlay');
       const content = document.querySelector('.single-asteroid');
 
       const asteroid = app.store.flattenedAsteroids.filter(
@@ -226,7 +226,7 @@ import router from './router.js';
             </dd>
         </dl>
       `;
-      overlayParent.hidden = false;
+      parent.hidden = false;
     },
 
     closeOverlay() {
