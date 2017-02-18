@@ -44,7 +44,13 @@ import router from './router.js';
      * Fetch NASA's APOD and render to DOM
      */
     getImageOfTheDay() {
-      const { baseUrl, apiKey, endpoints: { apod }} = config;
+      const {
+        baseUrl,
+        apiKey,
+        endpoints: {
+          apod
+        }
+      } = config;
 
       // Get background image from NASA image of the day
       fetch(`${baseUrl}${apod}?api_key=${apiKey}`)
@@ -60,7 +66,13 @@ import router from './router.js';
      * Fetch the nearest asteroids based on current date
      */
     getAsteroids() {
-      const { baseUrl, apiKey, endpoints: { neo }} = config;
+      const {
+        baseUrl,
+        apiKey,
+        endpoints: {
+          neo
+        }
+      } = config;
       const today = utils.formatDate(new Date());
 
       fetch(`${baseUrl}${neo}?start_date=${today}&api_key=${apiKey}`)
@@ -75,15 +87,15 @@ import router from './router.js';
           this.store.minSize = Math.min(
             ...this.store.flattenedAsteroids.map(
               asteroid =>
-                asteroid.estimated_diameter.meters.estimated_diameter_max -
-                  asteroid.estimated_diameter.meters.estimated_diameter_min
+              asteroid.estimated_diameter.meters.estimated_diameter_max -
+              asteroid.estimated_diameter.meters.estimated_diameter_min
             )
           );
           this.store.maxSize = Math.max(
             ...this.store.flattenedAsteroids.map(
               asteroid =>
-                asteroid.estimated_diameter.meters.estimated_diameter_max -
-                  asteroid.estimated_diameter.meters.estimated_diameter_min
+              asteroid.estimated_diameter.meters.estimated_diameter_max -
+              asteroid.estimated_diameter.meters.estimated_diameter_min
             )
           );
           return res;
@@ -91,16 +103,16 @@ import router from './router.js';
         .then(res => render.toDom(
           document.querySelector('.asteroid-list'),
           Object.keys(res)
-            .sort((a, b) => new Date(a) - new Date(b))
-            .map(key => {
-              return render.listSection(
-                key,
-                res[key]
-                  .map(asteroid => render.listItem(asteroid))
-                  .reduce((html, listItem) => html += listItem)
-              );
-            })
-            .reduce((html, listSectionElement) => html += listSectionElement)
+          .sort((a, b) => new Date(a) - new Date(b))
+          .map(key => {
+            return render.listSection(
+              key,
+              res[key]
+              .map(asteroid => render.listItem(asteroid))
+              .reduce((html, listItem) => html += listItem)
+            );
+          })
+          .reduce((html, listSectionElement) => html += listSectionElement)
         ))
         .catch(err => console.error(err));
     }
@@ -145,7 +157,7 @@ import router from './router.js';
     listItem(asteroid) {
       const size = Math.floor(
         asteroid.estimated_diameter.meters.estimated_diameter_max -
-          asteroid.estimated_diameter.meters.estimated_diameter_min
+        asteroid.estimated_diameter.meters.estimated_diameter_min
       );
 
       const pixelSize = utils.rangeScale(
