@@ -1,3 +1,1 @@
-# Webapp from scratch
-
-🎉
+# Webapp From Scratch
