@@ -2,17 +2,38 @@
   <style>
     :host {
       contain: content;
+      overflow: scroll;
+    }
+
+    ol {
+      list-style: none;
+      padding: 0;
+      height: 100%;
+      background-color: #000a;
+      color: white;
+      margin: 0;
+    }
+
+    li {
+      padding: 1em;
+    }
+
+    time {
+      text-align: right;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      display: block;
+      padding: 1em 0;
     }
   </style>
-  <div>
-
-  </div>
+  <ol></ol>
 </template>
 
 <template id="list-section">
-  <div>
-    <slot></slot>
-  </div>
+  <li>
+    <time></time>
+  </li>
 </template>
 
 <template id="asteroid">
@@ -42,6 +63,8 @@
         const date = this._formatDate(new Date());
         const container = ownerDocument.querySelector('#container').content.cloneNode(true);
 
+        const containerList = container.querySelector('ol');
+
         fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${date}&api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6`)
           .then(res => res.json())
           .then(res => res.near_earth_objects)
@@ -50,12 +73,16 @@
               .sort((a, b) => new Date(a) - new Date(b))
               .forEach(key => {
                 const listSection = ownerDocument.querySelector('#list-section').content.cloneNode(true);
+                const listSectionParent = listSection.querySelector('li');
+                listSection.querySelector('time').innerText = key;
+
                 res[key].forEach(asteroid => {
                   const asteroidElement = ownerDocument.querySelector('#asteroid').content.cloneNode(true);
                   asteroidElement.querySelector('h2').innerText = asteroid.name;
-                  listSection.append(asteroidElement);
+                  listSectionParent.append(asteroidElement);
                 });
-                container.append(listSection);
+
+                containerList.append(listSection);
               });
             this.shadowRoot.append(container);
           });
