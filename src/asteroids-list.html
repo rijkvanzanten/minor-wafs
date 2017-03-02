@@ -1,0 +1,31 @@
+<template id="container">
+  <style>
+    :host {
+      contain: content;
+      background-color: blue;
+    }
+  </style>
+  <div>
+
+  </div>
+</template>
+
+<script>
+  (function(ownerDocument) {
+    class AsteroidsList extends HTMLElement {
+      constructor() {
+        super();
+
+        const shadowRoot = this.attachShadow({ mode: 'open' });
+        const template = ownerDocument.querySelector('template');
+        const instance = template.content.cloneNode(true);
+
+        shadowRoot.appendChild(instance);
+
+        this.addEventListener('click', e => console.log(e));
+      }
+    }
+
+    window.customElements.define('asteroids-list', AsteroidsList);
+  }(document.currentScript.ownerDocument))
+</script>

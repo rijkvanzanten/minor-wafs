@@ -1,0 +1,35 @@
+<link rel="import" href="asteroids-header.html" />
+<link rel="import" href="asteroids-list.html" />
+
+<template>
+  <style>
+    :host {
+      contain: content;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    asteroids-list {
+      flex-grow: 1;
+    }
+  </style>
+  <asteroids-header></asteroids-header>
+  <asteroids-list></asteroids-list>
+</template>
+
+<script>
+  class AsteroidsApp extends HTMLElement {
+    constructor() {
+      super();
+
+      const importDoc = document.currentScript.ownerDocument;
+      const shadowRoot = this.attachShadow({ mode: 'open' });
+      const template = importDoc.querySelector('template');
+      const instance = template.content.cloneNode(true);
+      shadowRoot.appendChild(instance);
+    }
+  }
+
+  window.customElements.define('asteroids-app', AsteroidsApp);
+</script>
