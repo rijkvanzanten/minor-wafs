@@ -1,3 +1,5 @@
+<link rel="import" href="asteroids-single.html" />
+
 <template id="container">
   <style>
     :host {
@@ -36,12 +38,6 @@
   </li>
 </template>
 
-<template id="asteroid">
-  <article>
-    <h2>Asteroid</h2>
-  </article>
-</template>
-
 <script>
   (function(ownerDocument) {
     class AsteroidsList extends HTMLElement {
@@ -77,8 +73,12 @@
                 listSection.querySelector('time').innerText = key;
 
                 res[key].forEach(asteroid => {
-                  const asteroidElement = ownerDocument.querySelector('#asteroid').content.cloneNode(true);
-                  asteroidElement.querySelector('h2').innerText = asteroid.name;
+                  const AsteroidsSingle = window.customElements.get('asteroids-single');
+                  const asteroidElement = new AsteroidsSingle();
+
+                  asteroidElement.setAttribute('name', asteroid.name);
+                  asteroidElement.setAttribute('href', `#asteroid/${asteroid.neo_reference_id}`);
+
                   listSectionParent.append(asteroidElement);
                 });
 
