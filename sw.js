@@ -1,4 +1,4 @@
-/* global self, caches, fetch */
+/* global self, caches, fetch, Response, Headers */
 
 const cacheName = 'asteroids-cache-v1';
 const urlsToCache = [
