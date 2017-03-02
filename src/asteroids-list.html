@@ -9,19 +9,56 @@
   </div>
 </template>
 
+<template id="list-section">
+  <div>
+    <slot></slot>
+  </div>
+</template>
+
+<template id="asteroid">
+  <article>
+    <h2>Asteroid</h2>
+  </article>
+</template>
+
 <script>
   (function(ownerDocument) {
     class AsteroidsList extends HTMLElement {
       constructor() {
         super();
 
-        const shadowRoot = this.attachShadow({ mode: 'open' });
-        const template = ownerDocument.querySelector('template');
-        const instance = template.content.cloneNode(true);
+        this.attachShadow({ mode: 'open' });
+      }
 
-        shadowRoot.appendChild(instance);
+      _addLeadingZero(number) {
+        return ('0' + number).slice(-2);
+      }
 
-        this.addEventListener('click', e => console.log(e));
+      _formatDate(date) {
+        return `${date.getFullYear()}-${this._addLeadingZero(date.getMonth() + 1)}-${this._addLeadingZero(date.getDate())}`;
+      }
+
+      connectedCallback() {
+        const date = this._formatDate(new Date());
+        const container = ownerDocument.querySelector('#container').content.cloneNode(true);
+
+        fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${date}&api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6`)
+          .then(res => res.json())
+          .then(res => res.near_earth_objects)
+          .then(res => {
+            Object.keys(res)
+              .sort((a, b) => new Date(a) - new Date(b))
+              .forEach(key => {
+                const listSection = ownerDocument.querySelector('#list-section').content.cloneNode(true);
+                res[key].forEach(asteroid => {
+                  const asteroidElement = ownerDocument.querySelector('#asteroid').content.cloneNode(true);
+                  asteroidElement.querySelector('h2').innerText = asteroid.name;
+                  listSection.append(asteroidElement);
+                });
+                container.append(listSection);
+              });
+            this.shadowRoot.append(container);
+          });
       }
     }
 
