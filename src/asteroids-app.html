@@ -1,5 +1,5 @@
-<link rel="import" href="asteroids-header.html" />
 <link rel="import" href="asteroids-list.html" />
+<link rel="import" href="asteroids-apod.html" />
 
 <template>
   <style>
@@ -13,9 +13,28 @@
     asteroids-list {
       flex-grow: 1;
     }
+
+    asteroids-apod {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    header {
+      background-color: #000a;
+      color: white;
+      text-align: center;
+    }
   </style>
-  <asteroids-header></asteroids-header>
+
+  <header>
+    <h1>Asteroids</h1>
+  </header>
   <asteroids-list></asteroids-list>
+  <asteroids-apod></asteroids-apod>
 </template>
 
 <script>

@@ -2,6 +2,7 @@
   <style>
     :host {
       contain: content;
+      background: var(--asteroids-apod-background, black);
     }
 
     img {
@@ -9,14 +10,16 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: var(--asteroids-apod-transition, 250ms ease);
+      transition: var(--asteroids-apod-transition, 450ms ease);
+      transform: scale(0.96);
     }
 
-    .opaque {
+    [data-loaded=true] {
       opacity: 1;
+      transform: scale(1);
     }
   </style>
-  <img src="" alt="NASA's Picture of the Day" />
+  <img data-loaded="false" src="" alt="NASA's Picture of the Day" />
 </template>
 
 <script>
@@ -25,25 +28,23 @@
       constructor() {
         super();
 
-        const shadowRoot = this.attachShadow({ mode: 'open' });
-        const template = ownerDocument.querySelector('template');
-        const instance = template.content.cloneNode(true);
-
-        shadowRoot.appendChild(instance);
-
-        this.addEventListener('click', e => console.log(e));
+        this.attachShadow({ mode: 'open' });
       }
 
       connectedCallback() {
-        const img = this.shadowRoot.querySelector('img');
+        const { shadowRoot } = this;
+
+        const template = ownerDocument.querySelector('template');
+        const instance = template.content.cloneNode(true);
 
         fetch(`https://api.nasa.gov/planetary/apod?api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6`)
           .then(res => res.json())
           .then(res => {
-            img.setAttribute('src', res.hdurl);
-            img.addEventListener('load', function() {
-              this.classList.add('opaque');
-            })
+            instance.querySelector('img').setAttribute('src', res.hdurl.replace(/^http:\/\//i, 'https://'));
+            shadowRoot.appendChild(instance);
+            shadowRoot.querySelector('img').addEventListener('load', function() {
+              this.setAttribute('data-loaded', true);
+            });
           });
       }
     }
