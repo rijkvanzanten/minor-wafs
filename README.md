@@ -13,34 +13,37 @@ Browser support at this time is lacking at best, but most browser vendors are wo
 
 ## Web Components in a nutshell
 **HTML Templates**
+
 `<template></template>`
 
 Html templates allow you to declare fragments of markup which are parsed as HTML, go unused at page load, but can be instantiated later on at runtime.
 
 > They're a place to put a big wad of HTML that you don't want the browser to mess with at all... for any reason.
-  - Rafael Weinstein (HTML Templates specification author)
+  Rafael Weinstein (HTML Templates specification author)
 
 **HTML Imports**
+
 `<link rel="import" href="my-component.html" />`
 
 HTML Imports is a way to include HTML documents in other HTML documents. This isn't limited to markup. An import can also include it's own CSS, JavaScript or anything else.
 
 **Shadow DOM**
+
 _From [Shadow DOM Fundamentals](https://developers.google.com/web/fundamentals/getting-started/primers/shadowdom)_
-Shadow DOM is just normal DOM with two differences: 1) how it's created/used and 2) how it behaves in relation to the rest of the page. Normally, you create DOM nodes and append them as children of another element. With shadow DOM, you create a scoped DOM tree that's attached to the element, but separate from its actual children. This scoped subtree is called a shadow tree. The element it's attached to is its shadow host. Anything you add in the shadows becomes local to the hosting element, including <style>. This is how shadow DOM achieves CSS style scoping.
+Shadow DOM is just normal DOM with two differences: 1) how it's created/used and 2) how it behaves in relation to the rest of the page. Normally, you create DOM nodes and append them as children of another element. With shadow DOM, you create a scoped DOM tree that's attached to the element, but separate from its actual children. This scoped subtree is called a shadow tree. The element it's attached to is its shadow host. Anything you add in the shadows becomes local to the hosting element, including `<style>`. This is how shadow DOM achieves CSS style scoping.
 
 **Custom Elements**
-With Custom Elements, developers can create new HTML tags, extend existing HTML tags, or extend the components other developers have build. It provides a web-standards way to create re-usable components using nothing more than vanilla JS/HTML/CSS.
 
+With Custom Elements, developers can create new HTML tags, extend existing HTML tags, or extend the components other developers have build. It provides a web-standards way to create re-usable components using nothing more than vanilla JS/HTML/CSS.
 
 ## Resources
 API for data: [NASA's open api](https://api.nasa.gov/index.html)
 
 Great resources for getting started with webcomponents:
-[webcomponents.org](http://webcomponents.org) - Polymer based webcomponents
-[Custom Elements v1](https://developers.google.com/web/fundamentals/getting-started/primers/customelements) - Googles getting-started with elements guide
-[Templates Introduction](https://www.html5rocks.com/en/tutorials/webcomponents/template/) - great html5rocks article about the inner workings of html template Elements
-[Imports introduction](https://www.html5rocks.com/en/tutorials/webcomponents/imports/) - again, great html5rocks article about imports
+- [webcomponents.org](http://webcomponents.org) - Polymer based webcomponents
+- [Custom Elements v1](https://developers.google.com/web/fundamentals/getting-started/primers/customelements) - Googles getting-started with elements guide
+- [Templates Introduction](https://www.html5rocks.com/en/tutorials/webcomponents/template/) - great html5rocks article about the inner workings of html template Elements
+- [Imports introduction](https://www.html5rocks.com/en/tutorials/webcomponents/imports/) - again, great html5rocks article about imports
 
 ## Take-aways on working with Web Components
 ### Templates
