@@ -1,0 +1,88 @@
+<template id="loader">
+  <h2>Loading</h2>
+</template>
+
+<template id="asteroid">
+  <h2 id="title"></h2>
+  <p id="meta"></p>
+</template>
+
+<template id="element">
+  <style>
+    :host {
+      color: white;
+    }
+  </style>
+  <article id="container"></article>
+</template>
+
+<script>
+  (function(ownerDocument) {
+
+    class AsteroidsDetail extends HTMLElement {
+      constructor() {
+        super();
+
+        const shadowRoot = this.attachShadow({ mode: 'open' });
+        const template = ownerDocument.getElementById('element');
+        const instance = template.content.cloneNode(true);
+        shadowRoot.append(instance);
+      }
+
+      static get observedAttributes() {
+        return ['neoid'];
+      }
+
+      get neoid() {
+        return this.getAttribute('neoid');
+      }
+
+      set neoid(val) {
+        this.setAttribute('neoid', val);
+      }
+
+      _clearContainer() {
+        const container = this.shadowRoot.getElementById('container');
+        while(container.lastChild) {
+          container.removeChild(container.lastChild);
+        }
+      }
+
+      _showLoader() {
+        const container = this.shadowRoot.getElementById('container');
+        const template = ownerDocument.getElementById('loader');
+        const instance = template.content.cloneNode(true);
+        container.append(instance);
+      }
+
+      _renderAsteroid(data) {
+        const container = this.shadowRoot.getElementById('container');
+        const template = ownerDocument.getElementById('asteroid');
+        const instance = template.content.cloneNode(true);
+        instance.getElementById('title').innerText = data.name;
+        instance.getElementById('meta').innerText = data.estimated_diameter.meters.estimated_diameter_max;
+        container.append(instance);
+      }
+
+      _fetchData(neoid) {
+        this._clearContainer();
+
+        this._showLoader();
+
+        fetch(`https://api.nasa.gov/neo/rest/v1/neo/${neoid}?api_key=lNMbOmip78PkrKx5w0VAjKIIAB2zAAGca8DXk2c6`)
+          .then(res => res.json())
+          .then(res => {
+            this._clearContainer();
+            this._renderAsteroid(res);
+          });
+      }
+
+      attributeChangedCallback(name, oldVal, newVal) {
+        this._fetchData(newVal);
+      }
+    }
+
+    window.customElements.define('asteroids-detail', AsteroidsDetail);
+
+  }(document.currentScript.ownerDocument))
+</script>
