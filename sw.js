@@ -2,11 +2,14 @@
 
 const cacheName = 'asteroids-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/src/asteroids-apod.html',
-  '/src/asteroids-app.html',
-  '/src/asteroids-list.html'
+  '',
+  'index.html',
+  'src/asteroids-apod.html',
+  'src/asteroids-app.html',
+  'src/asteroids-list.html',
+  'src/asteroids-detail.html',
+  'src/asteroids-route.html',
+  'src/asteroids-single.html'
 ];
 
 self.addEventListener('install', event => {
