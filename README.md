@@ -85,5 +85,8 @@ Great resources for getting started with webcomponents:
 - [ ] Further research in creating a stable, modular router
 - [ ] Create set of best-practices and code-style rules for web components
 
+- [x] Setup basic app with routing
+- [ ] Create usable demo app
+
 ## License
 The contents of this project are licensed under the MIT License.
