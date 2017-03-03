@@ -1,0 +1,66 @@
+<template>
+  <style>
+    :host([active]) {
+      display: block;
+    }
+
+    :host(:not([active])) {
+      display: none;
+    }
+  </style>
+  <slot></slot>
+</template>
+
+<script>
+  (function(ownerDocument) {
+    class AsteroidsRoute extends HTMLElement {
+      get route() {
+        return this.getAttribute('route');
+      }
+
+      set route(val) {
+        this.setAttribute('route', val);
+      }
+
+      constructor() {
+        super();
+
+        const shadowRoot = this.attachShadow({ mode: 'open' });
+        const template = ownerDocument.getElementsByTagName('template')[0];
+        const instance = template.content.cloneNode(true);
+        shadowRoot.append(instance);
+      }
+
+      _clearHashSymbol(hash) {
+        return hash.toString().replace(/#/, '');
+      }
+
+      _clearSlashes(hash) {
+        return hash.toString().replace(/\/$/, '').replace(/^\//, '');
+      }
+
+      _createHashArray(hash) {
+        return this._clearHashSymbol(this._clearSlashes(hash)).split('/');
+      }
+
+      checkRoute(hash) {
+        const hashArray = this._createHashArray(hash);
+
+        if(hashArray[0] === this.getAttribute('route')) {
+          this.setAttribute('active', '');
+        } else {
+          this.removeAttribute('active');
+        }
+
+        /**
+         * TODO: this is very ugly and shouldn't be here i suppose
+         */
+        if(this.getAttribute('route') === 'asteroid' && hashArray[0] === 'asteroid' && hashArray.length > 1) {
+          this.getElementsByTagName('asteroids-detail')[0].neoid = hashArray[1];
+        }
+      }
+    }
+
+    window.customElements.define('asteroids-route', AsteroidsRoute);
+  }(document.currentScript.ownerDocument))
+</script>

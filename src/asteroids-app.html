@@ -1,5 +1,7 @@
 <link rel="import" href="asteroids-list.html" />
 <link rel="import" href="asteroids-apod.html" />
+<link rel="import" href="asteroids-route.html" />
+<link rel="import" href="asteroids-detail.html" />
 
 <template>
   <style>
@@ -33,22 +35,39 @@
   <header>
     <h1>Asteroids</h1>
   </header>
-  <asteroids-list></asteroids-list>
+
+  <asteroids-route route="overview">
+    <asteroids-list></asteroids-list>
+  </asteroids-route>
+
+  <asteroids-route route="asteroid">
+    <asteroids-detail></asteroids-detail>
+  </asteroids-route>
+
   <asteroids-apod></asteroids-apod>
 </template>
 
 <script>
-  class AsteroidsApp extends HTMLElement {
-    constructor() {
-      super();
+  (function(ownerDocument) {
+    class AsteroidsApp extends HTMLElement {
+      constructor() {
+        super();
 
-      const importDoc = document.currentScript.ownerDocument;
-      const shadowRoot = this.attachShadow({ mode: 'open' });
-      const template = importDoc.querySelector('template');
-      const instance = template.content.cloneNode(true);
-      shadowRoot.appendChild(instance);
+        const shadowRoot = this.attachShadow({ mode: 'open' });
+        const template = ownerDocument.querySelector('template');
+        const instance = template.content.cloneNode(true);
+        shadowRoot.appendChild(instance);
+      }
+
+      connectedCallback() {
+        this.shadowRoot.querySelectorAll('asteroids-route').forEach(route => route.checkRoute(window.location.hash));
+
+        window.addEventListener('hashchange', () => {
+          this.shadowRoot.querySelectorAll('asteroids-route').forEach(route => route.checkRoute(window.location.hash));
+        });
+      }
     }
-  }
 
-  window.customElements.define('asteroids-app', AsteroidsApp);
+    window.customElements.define('asteroids-app', AsteroidsApp);
+  }(document.currentScript.ownerDocument))
 </script>
